@@ -12,7 +12,81 @@
  */
 #pragma once
 
+#include <algorithm>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <vector>
+
 namespace quickcsv {
+
+inline auto read_csv(std::string const& filename, std::vector<std::string> usecols = {}, size_t skiprows = 0, char sep = ',') {
+    // read csv row by row, support utf8
+    // example: read_csv("test.csv", {"last", "time"}, ',');
+    bool file_exist = std::filesystem::exists(filename);
+    if (!file_exist) {
+        std::cout << filename << " not exist!\n";
+        std::exit(EXIT_SUCCESS);
+    }
+
+    std::ifstream file(filename, std::ios::in);
+    std::string line;
+    std::stringstream ss;
+    std::string cell;
+
+    for (size_t i = 0; i < skiprows; ++i) {
+        std::getline(file, line);
+    }
+
+    // read headers
+    std::vector<std::string> header_vector;
+    header_vector.reserve(8);
+    std::getline(file, line);
+    ss << line;
+    while (std::getline(ss, cell, sep)) {
+        header_vector.emplace_back(cell);
+    }
+    ss.clear();
+
+    usecols = (usecols.size() > 0) ? usecols : header_vector;
+
+    // process headers
+    std::vector<int> index_vect;
+    index_vect.reserve(header_vector.size());
+
+    for (auto const& hearder_name : header_vector) {
+        auto it = std::find(usecols.begin(), usecols.end(), hearder_name);
+        if (it != usecols.end()) {
+            index_vect.emplace_back(std::distance(usecols.begin(), it));
+        } else {
+            index_vect.emplace_back(-1);
+        }
+    }
+
+    std::vector<std::vector<std::string>> table;
+    table.reserve(32);
+    uint col_nums = usecols.size();
+    while (std::getline(file, line)) {
+        if (line.size() < 1) {
+            break;
+        }
+        std::vector<std::string> row_vector(col_nums);
+
+        ss << line;
+        for (uint i = 0; std::getline(ss, cell, sep); ++i) {
+            int col_index = index_vect[i];
+            if (col_index != -1) {
+                row_vector[col_index] = cell;
+            }
+        }
+        ss.clear();
+
+        table.emplace_back(row_vector);
+    }
+    file.close();
+
+    return table;
+}
 
 template <typename T>
 struct Converter {
@@ -41,5 +115,11 @@ struct Converter {
             return str;
     }
 };
+
+// struct Params {
+//     char sep = ',';
+//     size_t skiprows = 0;
+//     std::vector<std::string> usecols{};
+// };
 
 }  // namespace quickcsv
