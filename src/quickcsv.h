@@ -20,7 +20,7 @@
 
 namespace quickcsv {
 
-inline auto read_csv(std::string const& filename, std::vector<std::string> usecols = {}, size_t skiprows = 0, char sep = ',') {
+inline auto read_raw_csv(std::string const& filename, std::vector<std::string> usecols = {}, size_t skiprows = 0, char sep = ',') {
     // read csv row by row, support utf8
     // example: read_csv("test.csv", {"last", "time"}, ',');
     bool file_exist = std::filesystem::exists(filename);
@@ -141,5 +141,11 @@ struct Param {
     size_t skiprows = 0;
     std::vector<std::string> usecols{};
 };
+
+template <typename... Ts>
+auto read_csv(std::string const& filename, Param const& parameters) {
+    auto table = read_raw_csv(filename, parameters.usecols, parameters.skiprows, parameters.sep);
+    return Parser<Ts...>::Parse(table);
+}
 
 }  // namespace quickcsv
