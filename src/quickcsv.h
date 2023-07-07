@@ -170,7 +170,7 @@ struct Param {
 };
 
 template <typename... Ts>
-auto read_csv(std::string const& filename, Param const& parameters) {
+auto read_csv(std::string const& filename, Param const& parameters = Param{}) {
     auto table = read_raw_csv(filename, parameters.usecols, parameters.skiprows, parameters.sep);
     return Parser<Ts...>::Parse(table);
 }
