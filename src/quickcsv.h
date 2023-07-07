@@ -13,12 +13,16 @@
 #pragma once
 
 #include <algorithm>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <vector>
 
 namespace quickcsv {
+
+auto EMPTY_INT = 0;
+auto EMPTY_FLOAT = NAN;
 
 inline auto read_raw_csv(std::string const& filename, std::vector<std::string> usecols = {}, size_t skiprows = 0, char sep = ',') {
     // read csv row by row, support utf8
@@ -90,29 +94,52 @@ inline auto read_raw_csv(std::string const& filename, std::vector<std::string> u
 
 template <typename T>
 struct Converter {
-    static constexpr auto convert(const std::string& str) {
-        if constexpr (std::is_same_v<T, int>)
-            return std::stoi(str);
-        else if constexpr (std::is_same_v<T, long>)
-            return std::stol(str);
-        else if constexpr (std::is_same_v<T, long long>)
-            return std::stoll(str);
-        else if constexpr (std::is_same_v<T, unsigned>)
-            return std::stoul(str);
-        else if constexpr (std::is_same_v<T, unsigned long>)
-            return std::stoul(str);
-        else if constexpr (std::is_same_v<T, unsigned long long>)
-            return std::stoull(str);
-        else if constexpr (std::is_same_v<T, char>)
-            return str[0];
-        else if constexpr (std::is_same_v<T, float>)
-            return std::stof(str);
-        else if constexpr (std::is_same_v<T, double>)
-            return std::stod(str);
-        else if constexpr (std::is_same_v<T, long double>)
-            return std::stold(str);
-        else
-            return str;
+    static auto convert(const std::string& str) {
+        T val{};
+        try {
+            if constexpr (std::is_same_v<T, int>)
+                val = std::stoi(str);
+            else if constexpr (std::is_same_v<T, long>)
+                val = std::stol(str);
+            else if constexpr (std::is_same_v<T, long long>)
+                val = std::stoll(str);
+            else if constexpr (std::is_same_v<T, unsigned>)
+                val = std::stoul(str);
+            else if constexpr (std::is_same_v<T, unsigned long>)
+                val = std::stoul(str);
+            else if constexpr (std::is_same_v<T, unsigned long long>)
+                val = std::stoull(str);
+            else if constexpr (std::is_same_v<T, char>)
+                val = str.empty() ? EMPTY_INT : str[0];
+            else if constexpr (std::is_same_v<T, float>)
+                val = std::stof(str);
+            else if constexpr (std::is_same_v<T, double>)
+                val = std::stod(str);
+            else if constexpr (std::is_same_v<T, long double>)
+                val = std::stold(str);
+            else
+                val = str;
+        } catch (...) {
+            if constexpr (std::is_same_v<T, int>)
+                val = EMPTY_INT;
+            else if constexpr (std::is_same_v<T, long>)
+                val = EMPTY_INT;
+            else if constexpr (std::is_same_v<T, long long>)
+                val = EMPTY_INT;
+            else if constexpr (std::is_same_v<T, unsigned>)
+                val = EMPTY_INT;
+            else if constexpr (std::is_same_v<T, unsigned long>)
+                val = EMPTY_INT;
+            else if constexpr (std::is_same_v<T, unsigned long long>)
+                val = EMPTY_INT;
+            else if constexpr (std::is_same_v<T, float>)
+                val = NAN;
+            else if constexpr (std::is_same_v<T, double>)
+                val = NAN;
+            else if constexpr (std::is_same_v<T, long double>)
+                val = NAN;
+        }
+        return val;
     }
 };
 
