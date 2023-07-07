@@ -116,6 +116,26 @@ struct Converter {
     }
 };
 
+template <typename... Ts>
+struct Parser {
+    constexpr static int N = sizeof...(Ts);
+    // the inline specifier allows the static member containter to be defined within the class itself
+    inline static std::tuple<std::vector<Ts>...> CONTAINER{};
+
+    template <int... I>
+    static void ParseTable(const std::vector<std::vector<std::string>>& table, std::integer_sequence<int, I...>) {
+        (std::get<I>(CONTAINER).reserve(table.size()), ...);
+        for (const auto& row : table) {
+            (std::get<I>(CONTAINER).push_back(Converter<Ts>::convert(row[I])), ...);
+        }
+    }
+
+    static auto Parse(const std::vector<std::vector<std::string>>& table) {
+        ParseTable(table, std::make_integer_sequence<int, N>());
+        return CONTAINER;
+    }
+};
+
 // struct Params {
 //     char sep = ',';
 //     size_t skiprows = 0;
