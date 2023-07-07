@@ -136,10 +136,10 @@ struct Parser {
     }
 };
 
-// struct Params {
-//     char sep = ',';
-//     size_t skiprows = 0;
-//     std::vector<std::string> usecols{};
-// };
+struct Param {
+    char sep = ',';
+    size_t skiprows = 0;
+    std::vector<std::string> usecols{};
+};
 
 }  // namespace quickcsv
