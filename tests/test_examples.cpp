@@ -2,6 +2,7 @@
 #include "example2.h"
 #include "example3.h"
 #include "example4.h"
+#include "example5.h"
 #include "test_func.h"
 
 int main() {
@@ -14,4 +15,5 @@ int main() {
     test_example2("test.csv");
     test_example3("test.csv");
     test_example4("test.csv");
+    test_example5("test-CN.csv");
 }
