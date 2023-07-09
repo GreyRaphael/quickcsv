@@ -12,6 +12,13 @@ Simply copy [src/quickcsv.h](src/quickcsv.h) to your project/include directory a
 
 ### [example1](tests/example1.h): Reading all data from the following `test.csv`.
 
+| symbol | open       | high       | low        | close      | volume    |
+| ------ | ---------- | ---------- | ---------- | ---------- | --------- |
+| AAPL   | 123.75     | 127.93     | 122.790001 | 127.790001 | 116307900 |
+| MSFT   | 235.899994 | 237.470001 | 233.149994 | 236.940002 | 25324000  |
+| IBM    | 115.057358 | 116.940727 | 114.588913 | 115.430206 | 5977367   |
+| TSLA   | 230.036667 | 239.666672 | 228.350006 | 239.476669 | 81408600  |
+
 ```csv
 symbol,open,high,low,close,volume
 AAPL,123.750000,127.930000,122.790001,127.790001,116307900
@@ -140,6 +147,13 @@ TSLA    239.477 81408600
 ```
 
 ### [exaple4](tests/example4.h): Reading specified columns from the following `test.csv` with parameters & `NAN` values
+
+| symbol | open       | high       | low        | close      | volume    |
+| ------ | ---------- | ---------- | ---------- | ---------- | --------- |
+| AAPL   | 123.75     | 127.93     | 122.790001 | 127.790001 | 116307900 |
+|        | 235.899994 | 237.470001 | 233.149994 | 236.940002 | 25324000  |
+| IBM    | 115.057358 | 116.940727 | 114.588913 | 115.430206 |           |
+| TSLA   | 230.036667 | 239.666672 | 228.350006 |            | 81408600  |
 
 ```csv
 ;test.csv
