@@ -1,16 +1,14 @@
 # Quick CSV
 
-- [Quick CSV](#quick-csv)
-  - [Installation](#installation)
-  - [Usage](#usage)
-
-quickcsv is an easy-to-use C++ CSV reader and parser library. It supports C++17 (and later), is header-only and comes with a basic test suite.
+**quickcsv** is an easy-to-use C++ CSV reader and parser library. It supports C++17 (and later), is header-only and comes with a basic test suite.
 
 ## Installation
 
 Simply copy [src/quickcsv.h](src/quickcsv.h) to your project/include directory and include it.
 
 ## Usage
+
+`auto [col1, col2] = quickcsv::read_csv<col1_type, col2_type, col3_type>(filename, parameter_struct);`
 
 [example1](tests/example1.h): Reading all data from the following `test.csv`.
 
@@ -98,7 +96,7 @@ IBM     115.057 116
 TSLA    230.037 239
 ```
 
-[example3](tests/example3.h): Reading specified columns from the following `test.csv`
+[example3](tests/example3.h): Reading specified columns from the following `test.csv` with parameters
 
 ```csv
 symbol,open,high,low,close,volume
