@@ -1,6 +1,6 @@
 # Quick CSV
 
-**quickcsv** is an easy-to-use C++ CSV reader and parser library. It supports C++17 (and later), is header-only and comes with a basic test suite.
+**quickcsv** is an easy-to-use C++ reader and parser library for utf8 CSV file. It supports C++17 (and later), is header-only and comes with a basic test suite.
 
 ## Installation
 
