@@ -8,7 +8,7 @@
 
 void test_example1(std::string const& filename) {
     // get all columns: symbol,open,high,low,close,volume
-    // the parsing types is: <std::string, double, int> related to column index
+    // the parsing types is: <std::string, double, double, double, double, int> related to column index
     auto [symbol_vec, open_vec, high_vec, low_vec, close_vec, volume_vec] = quickcsv::read_csv<std::string, double, double, double, double, int>(filename);
 
     assert(typeid(symbol_vec) == typeid(std::vector<std::string>));
