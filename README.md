@@ -200,7 +200,7 @@ IBM     115.43  0
 TSLA    nan     81408600
 ```
 
-### [example5](tests/example5.h): Reading chinese symbols
+### [example5](tests/example5.h): Reading chinese symbols from the following `test-CN.csv`
 
 ```csv
 stockcode,name,close,volume
@@ -227,7 +227,7 @@ void test_example5(std::string const& filename) {
 }
 
 int main(){
-    test_example5("test.csv");
+    test_example5("test-CN.csv");
 }
 ```
 
