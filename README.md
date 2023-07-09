@@ -199,3 +199,42 @@ AAPL    127.79  116307900
 IBM     115.43  0
 TSLA    nan     81408600
 ```
+
+### [example5](tests/example5.h): Reading chinese symbols
+
+```csv
+stockcode,name,close,volume
+000725,京东方A,4.32,592100000
+600519,贵州茅台,1690.03,1520000
+300750,宁德时代,222.25,9810000
+688981,中芯国际,49.38,28340000
+```
+
+```cpp
+#include <iostream>
+
+#include "quickcsv.h"
+
+void test_example5(std::string const& filename) {
+    auto [stockcode_vec, name_vec, close_vec, volume_vec] = quickcsv::read_csv<std::string, std::string, double, int>(filename);
+
+    for (unsigned i = 0; i < stockcode_vec.size(); ++i) {
+        std::cout << stockcode_vec[i] << '\t';
+        std::cout << name_vec[i] << '\t';
+        std::cout << close_vec[i] << '\t';
+        std::cout << volume_vec[i] << '\n';
+    }
+}
+
+int main(){
+    test_example5("test.csv");
+}
+```
+
+```bash
+# output
+000725  京东方A 4.32    592100000
+600519  贵州茅台        1690.03 1520000
+300750  宁德时代        222.25  9810000
+688981  中芯国际        49.38   28340000
+```
