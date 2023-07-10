@@ -146,7 +146,7 @@ IBM     115.43  5977367
 TSLA    239.477 81408600
 ```
 
-### [exaple4](tests/example4.h): Reading specified columns from the following `test.csv` with parameters & `NAN` values
+### [example4](tests/example4.h): Reading specified columns from the following `test.csv` with parameters & `NAN` values
 
 | symbol | open       | high       | low        | close      | volume    |
 | ------ | ---------- | ---------- | ---------- | ---------- | --------- |
